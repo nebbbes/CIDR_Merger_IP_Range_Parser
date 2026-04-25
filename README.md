@@ -41,9 +41,12 @@ Python 3.8 или выше
 Интернет-соединение (для загрузки диапазонов стран)
 
 Сборка в исполняемый .exe (Windows)
-Скачать готовый .exe
-[[Скачать CIDR_Merger.exe](https://img.shields.io/badge/Download-CIDR_Merger.exe-blue?style=for-the-badge&logo=windows)](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)
-Или перейдите на **[страницу релизов](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)** и скачайте файл `CIDR_Merger.exe`.
+## 🚀 Скачать готовый .exe (Windows)
+
+[![Download CIDR_Merger.exe](https://img.shields.io/badge/Download-CIDR_Merger.exe-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest/download/CIDR_Merger.exe)
+
+**[Все релизы →](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)**
+
 Коротко сборка в исполняемый .exe (в PowerShell):
 PowerShell
 python -m venv venv
