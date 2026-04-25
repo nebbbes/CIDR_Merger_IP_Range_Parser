@@ -42,7 +42,7 @@ Python 3.8 или выше
 
 Сборка в исполняемый .exe (Windows)
 Скачать готовый .exe
-[![Скачать CIDR_Merger.exe](https://img.shields.io/badge/Download-CIDR_Merger.exe-blue?style=for-the-badge&logo=windows)](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)
+[[Скачать CIDR_Merger.exe](https://img.shields.io/badge/Download-CIDR_Merger.exe-blue?style=for-the-badge&logo=windows)](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)
 Или перейдите на **[страницу релизов](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)** и скачайте файл `CIDR_Merger.exe`.
 Коротко сборка в исполняемый .exe (в PowerShell):
 PowerShell
