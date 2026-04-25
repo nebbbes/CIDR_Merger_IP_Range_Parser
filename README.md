@@ -41,16 +41,19 @@ Python 3.8 или выше
 Интернет-соединение (для загрузки диапазонов стран)
 
 Сборка в исполняемый .exe (Windows)
-Подробная инструкция находится в файле BUILD_EXE.md.
-Коротко (в PowerShell):
-PowerShellpython -m venv venv
+Скачать готовый .exe
+[![Скачать CIDR_Merger.exe](https://img.shields.io/badge/Download-CIDR_Merger.exe-blue?style=for-the-badge&logo=windows)](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)
+Или перейдите на **[страницу релизов](https://github.com/nebbbes/CIDR_Merger_IP_Range_Parser/releases/latest)** и скачайте файл `CIDR_Merger.exe`.
+Коротко сборка в исполняемый .exe (в PowerShell):
+PowerShell
+python -m venv venv
 .\venv\Scripts\Activate.ps1
 pip install requests beautifulsoup4 pyinstaller
 pyinstaller --onefile --windowed --clean --name "CIDR_Merger" ip.py
 Готовый .exe появится в папке dist/.
+
 Файлы проекта
 
 ip.py — основной код приложения
 requirements.txt
 ip_merger_settings.ini — создаётся автоматически (настройки окна)
-BUILD_EXE.md — инструкция по сборке
