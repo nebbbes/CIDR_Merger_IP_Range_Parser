@@ -167,7 +167,7 @@ COUNTRIES_LIST = [
     ("Туркменистан", "turkmenistan"), ("Тувалу", "tuvalu"), ("Уганда", "uganda"), ("Украина", "ukraine"),
     ("ОАЭ", "united-arab-emirates"), ("Великобритания", "united-kingdom-of-great-britain-and-northern-ireland"),
     ("США", "united-states-of-america"), ("Уругвай", "uruguay"), ("Узбекистан", "uzbekistan"),
-    ("Вануату", "vanuatu"), ("Венесуэла", "venezuela-bolivarian-republic-of"), ("Вьетнам", "viet-nam"),
+    ("Вануату", "vanuatu"), ("Венесуэла", "venezuela-(bolivarian-republic-of)"), ("Вьетнам", "viet-nam"),
     ("Йемен", "yemen"), ("Замбия", "zambia"), ("Зимбабве", "zimbabwe"),
 ]
 
