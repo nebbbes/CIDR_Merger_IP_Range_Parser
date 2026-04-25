@@ -1,0 +1,5 @@
+tkinter
+requests
+beautifulsoup4
+ipaddress
+# tkinter и ipaddress — встроенные в Python, но указываем для ясности
