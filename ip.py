@@ -10,7 +10,7 @@ import configparser
 from collections import Counter
 from bs4 import BeautifulSoup
 
-# ---------- IP RANGE MERGER LOGIC ----------
+# ---------- IP RANGE MERGER LOGIC (без изменений) ----------
 def text_ip_to_int(txt: str) -> int:
     res = 0
     for part in txt.split('.'):
@@ -101,75 +101,44 @@ def merge_and_format(input_text: str, output_type: str):
     else:
         return ranges_to_text(merged)
 
-# ---------- СПИСОК СТРАН ----------
-COUNTRIES_LIST = [
-    ("Афганистан", "afghanistan"), ("Аландские острова", "aland-islands"),
-    ("Албания", "albania"), ("Алжир", "algeria"), ("Американское Самоа", "american-samoa"),
-    ("Андорра", "andorra"), ("Ангола", "angola"), ("Ангуилла", "anguilla"),
-    ("Антарктика", "antarctica"), ("Антигуа и Барбуда", "antigua-and-barbuda"),
-    ("Аргентина", "argentina"), ("Армения", "armenia"), ("Аруба", "aruba"),
-    ("Австралия", "australia"), ("Австрия", "austria"), ("Азербайджан", "azerbaijan"),
-    ("Багамские острова", "bahamas"), ("Бахрейн", "bahrain"), ("Бангладеш", "bangladesh"),
-    ("Барбадос", "barbados"), ("Беларусь", "belarus"), ("Бельгия", "belgium"),
-    ("Белиз", "belize"), ("Бенин", "benin"), ("Бермудские Острова", "bermuda"),
-    ("Бутан", "bhutan"), ("Боливия", "bolivia-plurinational-state-of"),
-    ("Бонайре, Синт-Эстатиус и Саба", "bonaire-sint-eustatius-and-saba"),
-    ("Босния и Герцеговина", "bosnia-and-herzegovina"), ("Ботсвана", "botswana"),
-    ("Бразилия", "brazil"), ("Бруней Даруссалам", "brunei-darussalam"), ("Болгария", "bulgaria"),
-    ("Буркина Фасо", "burkina-faso"), ("Бурунди", "burundi"), ("Камбоджа", "cambodia"),
-    ("Камерун", "cameroon"), ("Канада", "canada"), ("Каймановы острова", "cayman-islands"),
-    ("Чад", "chad"), ("Чили", "chile"), ("Китай", "china"), ("Колумбия", "colombia"),
-    ("Коморские Острова", "comoros"), ("Конго", "congo"), ("Коста-Рика", "costa-rica"),
-    ("Хорватия", "croatia"), ("Куба", "cuba"), ("Кюрасао", "curacao"), ("Кипр", "cyprus"),
-    ("Чешская республика", "czechia"), ("Дания", "denmark"), ("Джибути", "djibouti"),
-    ("Доминиканская Республика", "dominican-republic"), ("Эквадор", "ecuador"),
-    ("Египет", "egypt"), ("Сальвадор", "el-salvador"), ("Эритрея", "eritrea"),
-    ("Эстония", "estonia"), ("Эфиопия", "ethiopia"), ("Фиджи", "fiji"),
-    ("Финляндия", "finland"), ("Франция", "france"), ("Габон", "gabon"), ("Гамбия", "gambia"),
-    ("Грузия", "georgia"), ("Германия", "germany"), ("Гана", "ghana"), ("Греция", "greece"),
-    ("Гренландия", "greenland"), ("Гренада", "grenada"), ("Гваделупа", "guadeloupe"),
-    ("Гуам", "guam"), ("Гватемала", "guatemala"), ("Гвинея", "guinea"),
-    ("Гвинея-Биссау", "guinea-bissau"), ("Гайана", "guyana"), ("Гаити", "haiti"),
-    ("Ватикан", "holy-see"), ("Гондурас", "honduras"), ("Гонконг", "hong-kong"),
-    ("Венгрия", "hungary"), ("Исландия", "iceland"), ("Индия", "india"),
-    ("Индонезия", "indonesia"), ("Иран", "iran-islamic-republic-of"), ("Ирак", "iraq"),
-    ("Ирландия", "ireland"), ("Израиль", "israel"), ("Италия", "italy"), ("Ямайка", "jamaica"),
-    ("Япония", "japan"), ("Иордания", "jordan"), ("Казахстан", "kazakhstan"),
-    ("Кения", "kenya"), ("Кирибати", "kiribati"), ("Кувейт", "kuwait"),
-    ("Кыргызстан", "kyrgyzstan"), ("Лаос", "lao-peoples-democratic-republic"),
-    ("Латвия", "latvia"), ("Ливан", "lebanon"), ("Либерия", "liberia"), ("Ливия", "libya"),
-    ("Лихтенштейн", "liechtenstein"), ("Литва", "lithuania"), ("Люксембург", "luxembourg"),
-    ("Мадагаскар", "madagascar"), ("Малави", "malawi"), ("Малайзия", "malaysia"),
-    ("Мальдивы", "maldives"), ("Мали", "mali"), ("Мальта", "malta"),
-    ("Маршалловы Острова", "marshall-islands"), ("Мавритания", "mauritania"),
-    ("Маврикий", "mauritius"), ("Мексика", "mexico"), ("Молдова", "moldova-republic-of"),
-    ("Монако", "monaco"), ("Монголия", "mongolia"), ("Черногория", "montenegro"),
-    ("Марокко", "morocco"), ("Мозамбик", "mozambique"), ("Мьянма", "myanmar"),
-    ("Намибия", "namibia"), ("Науру", "nauru"), ("Непал", "nepal"), ("Нидерланды", "netherlands"),
-    ("Новая Зеландия", "new-zealand"), ("Никарагуа", "nicaragua"), ("Нигер", "niger"),
-    ("Нигерия", "nigeria"), ("Северная Корея", "korea-democratic-peoples-republic-of"),
-    ("Северная Македония", "north-macedonia"), ("Норвегия", "norway"), ("Оман", "oman"),
-    ("Пакистан", "pakistan"), ("Палау", "palau"), ("Панама", "panama"),
-    ("Папуа-Новая Гвинея", "papua-new-guinea"), ("Парагвай", "paraguay"), ("Перу", "peru"),
-    ("Филиппины", "philippines"), ("Польша", "poland"), ("Португалия", "portugal"),
-    ("Пуэрто-Рико", "puerto-rico"), ("Катар", "qatar"), ("Румыния", "romania"),
-    ("Россия", "russian-federation"), ("Руанда", "rwanda"), ("Самоа", "samoa"),
-    ("Сан-Марино", "san-marino"), ("Саудовская Аравия", "saudi-arabia"), ("Сенегал", "senegal"),
-    ("Сербия", "serbia"), ("Сейшельские Острова", "seychelles"), ("Сьерра-Леоне", "sierra-leone"),
-    ("Сингапур", "singapore"), ("Словакия", "slovakia"), ("Словения", "slovenia"),
-    ("Соломоновы Острова", "solomon-islands"), ("Сомали", "somalia"), ("Южная Африка", "south-africa"),
-    ("Южная Корея", "korea-republic-of"), ("Южный Судан", "south-sudan"), ("Испания", "spain"),
-    ("Шри-Ланка", "sri-lanka"), ("Судан", "sudan"), ("Суринам", "suriname"), ("Швеция", "sweden"),
-    ("Швейцария", "switzerland"), ("Сирия", "syrian-arab-republic"), ("Тайвань", "taiwan-province-of-china"),
-    ("Таджикистан", "tajikistan"), ("Танзания", "tanzania-united-republic-of"), ("Таиланд", "thailand"),
-    ("Тимор-Лесте", "timor-leste"), ("Того", "togo"), ("Тонга", "tonga"),
-    ("Тринидад и Тобаго", "trinidad-and-tobago"), ("Тунис", "tunisia"), ("Турция", "turkey"),
-    ("Туркменистан", "turkmenistan"), ("Тувалу", "tuvalu"), ("Уганда", "uganda"), ("Украина", "ukraine"),
-    ("ОАЭ", "united-arab-emirates"), ("Великобритания", "united-kingdom-of-great-britain-and-northern-ireland"),
-    ("США", "united-states-of-america"), ("Уругвай", "uruguay"), ("Узбекистан", "uzbekistan"),
-    ("Вануату", "vanuatu"), ("Венесуэла", "venezuela-(bolivarian-republic-of)"), ("Вьетнам", "viet-nam"),
-    ("Йемен", "yemen"), ("Замбия", "zambia"), ("Зимбабве", "zimbabwe"),
-]
+# ---------- ФУНКЦИЯ ПОЛУЧЕНИЯ СПИСКА СТРАН С ВЕБ-СТРАНИЦЫ ----------
+def fetch_countries_list(lang: str = 'ru'):
+    """
+    Парсит страницу со списком стран и возвращает список кортежей (название_страны, country_id).
+    country_id — часть из href между последним '/' и '-ip-address-ranges'.
+    """
+    if lang == 'ru':
+        url = "https://lite.ip2location.com/ru/ip-address-ranges-by-country"
+    else:
+        url = "https://lite.ip2location.com/ip-address-ranges-by-country"
+    
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+    try:
+        response = requests.get(url, headers=headers, timeout=15)
+        response.raise_for_status()
+    except Exception as e:
+        print(f"Ошибка загрузки страницы со списком стран: {e}")
+        return None
+    
+    soup = BeautifulSoup(response.text, 'html.parser')
+    links = soup.find_all('a', class_='align-middle stretched-link')
+    
+    countries = []
+    for link in links:
+        href = link.get('href')
+        if not href:
+            continue
+        name = link.get_text(strip=True)
+        if not name:
+            continue
+        
+        # Извлекаем country_id
+        if href.endswith('-ip-address-ranges'):
+            base = href.rsplit('/', 1)[-1]
+            country_id = base.replace('-ip-address-ranges', '')
+            countries.append((name, country_id))
+    
+    return countries
 
 # ---------- ФУНКЦИЯ ПОЛУЧЕНИЯ IP ДИАПАЗОНОВ ----------
 def get_json_url_from_country_page(country_id: str, lang: str = 'ru'):
@@ -235,6 +204,9 @@ class CIDRMergerApp:
         self.config_file = "ip_merger_settings.ini"
         self.load_settings()
         
+        # Кэш списка стран
+        self.countries_cache_file = "countries_cache.json"
+        
         # Данные для статистики
         self.country_stats = Counter()
         
@@ -244,7 +216,6 @@ class CIDRMergerApp:
         window_width = min(self.settings.get('window_width', 1300), screen_width - 50)
         window_height = min(self.settings.get('window_height', 800), screen_height - 50)
         
-        # Проверяем, что x и y не None
         x = self.settings.get('window_x')
         y = self.settings.get('window_y')
         
@@ -255,22 +226,29 @@ class CIDRMergerApp:
         root.geometry(f"{window_width}x{window_height}+{x}+{y}")
         root.minsize(1000, 600)
         
-        # Привязка события закрытия
         root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        self.countries_data = COUNTRIES_LIST
-        self.filtered_countries = COUNTRIES_LIST
         self.current_lang = self.settings.get('language', 'ru')
-
-        self.create_widgets()
+        
+        # Пытаемся загрузить список стран из кэша
+        self.countries_data = self.load_countries_from_cache()
+        if self.countries_data:
+            self.filtered_countries = self.countries_data.copy()
+            self.create_widgets()
+            self.apply_sorting()  # применяем сохранённую настройку сортировки
+            self.update_country_list()
+        else:
+            self.countries_data = []
+            self.filtered_countries = []
+            self.create_widgets()
+            self.update_country_list()
+            threading.Thread(target=self.load_countries_async, daemon=True).start()
+        
         self.setup_hotkeys()
         self.setup_context_menus()
-        
-        self.update_country_list()
         self.update_left_frame_title()
 
     def load_settings(self):
-        """Загрузка настроек из INI файла"""
         self.settings = {
             'window_width': 1300,
             'window_height': 800,
@@ -278,39 +256,33 @@ class CIDRMergerApp:
             'window_y': None,
             'language': 'ru',
             'auto_clear': True,
-            'paned_position': 350
+            'paned_position': 350,
+            'sort_alphabetically': False  # новая настройка
         }
-        
         if os.path.exists(self.config_file):
             try:
                 config = configparser.ConfigParser()
                 config.read(self.config_file, encoding='utf-8')
-                
                 if 'Window' in config:
                     self.settings['window_width'] = config.getint('Window', 'width', fallback=1300)
                     self.settings['window_height'] = config.getint('Window', 'height', fallback=800)
-                    # Читаем x и y, если они есть
                     x_val = config.get('Window', 'x', fallback=None)
                     y_val = config.get('Window', 'y', fallback=None)
                     if x_val and x_val != 'None':
                         self.settings['window_x'] = int(x_val)
                     if y_val and y_val != 'None':
                         self.settings['window_y'] = int(y_val)
-                
                 if 'Settings' in config:
                     self.settings['language'] = config.get('Settings', 'language', fallback='ru')
                     self.settings['auto_clear'] = config.getboolean('Settings', 'auto_clear', fallback=True)
                     self.settings['paned_position'] = config.getint('Settings', 'paned_position', fallback=350)
+                    self.settings['sort_alphabetically'] = config.getboolean('Settings', 'sort_alphabetically', fallback=False)
             except Exception as e:
                 print(f"Ошибка загрузки настроек: {e}")
-                pass
 
     def save_settings(self):
-        """Сохранение настроек в INI файл"""
         try:
             config = configparser.ConfigParser()
-            
-            # Получаем текущую геометрию окна
             geometry = self.root.geometry()
             match = re.match(r'(\d+)x(\d+)\+(-?\d+)\+(-?\d+)', geometry)
             if match:
@@ -321,27 +293,22 @@ class CIDRMergerApp:
                     'x': str(x),
                     'y': str(y)
                 }
-            
-            # Сохраняем настройки
             config['Settings'] = {
                 'language': self.current_lang,
                 'auto_clear': str(self.auto_clear_var.get()),
-                'paned_position': str(self.main_paned.sashpos(0) if hasattr(self, 'main_paned') else 350)
+                'paned_position': str(self.main_paned.sashpos(0) if hasattr(self, 'main_paned') else 350),
+                'sort_alphabetically': str(self.sort_alphabetically_var.get())
             }
-            
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 config.write(f)
         except Exception as e:
             print(f"Ошибка сохранения настроек: {e}")
-            pass
 
     def on_closing(self):
-        """Обработка закрытия окна"""
         self.save_settings()
         self.root.destroy()
 
     def update_left_frame_title(self):
-        """Обновляет заголовок левого поля с отображением статистики"""
         if hasattr(self, 'left_output_frame'):
             if self.country_stats:
                 stats_str = ", ".join([f"{country} {count} стр" for country, count in self.country_stats.most_common(3)])
@@ -351,15 +318,92 @@ class CIDRMergerApp:
             self.left_output_frame.config(text=title)
 
     def add_to_stats(self, country_name, ranges_count):
-        """Добавляет статистику по стране"""
         if ranges_count > 0:
             self.country_stats[country_name] += ranges_count
             self.update_left_frame_title()
 
     def clear_stats(self):
-        """Очищает статистику"""
         self.country_stats.clear()
         self.update_left_frame_title()
+
+    # ---------- Методы для работы с кэшем стран ----------
+    def load_countries_from_cache(self):
+        if os.path.exists(self.countries_cache_file):
+            try:
+                with open(self.countries_cache_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                return data.get('countries', [])
+            except:
+                pass
+        return None
+
+    def save_countries_to_cache(self, countries):
+        try:
+            with open(self.countries_cache_file, 'w', encoding='utf-8') as f:
+                json.dump({'countries': countries}, f, ensure_ascii=False, indent=2)
+        except:
+            pass
+
+    def load_countries_async(self):
+        """Фоновая загрузка списка стран"""
+        self.root.after(0, lambda: self.status_label.config(text="🌍 Загрузка списка стран...", foreground="orange"))
+        countries = fetch_countries_list(self.current_lang)
+        if not countries:
+            countries = fetch_countries_list('en')
+        if countries:
+            self.countries_data = countries
+            self.filtered_countries = countries.copy()
+            self.save_countries_to_cache(countries)
+            self.root.after(0, self.apply_sorting)
+            self.root.after(0, self.update_country_list)
+            self.root.after(0, lambda: self.status_label.config(text=f"✅ Загружено {len(countries)} стран", foreground="green"))
+        else:
+            self.root.after(0, lambda: self.status_label.config(text="❌ Не удалось загрузить список стран", foreground="red"))
+            self.root.after(0, lambda: messagebox.showerror("Ошибка", "Не удалось получить список стран с сайта IP2Location.\nПроверьте интернет-соединение."))
+
+    # ---------- Методы для сортировки стран ----------
+    def apply_sorting(self):
+        """Применяет текущую настройку сортировки к filtered_countries"""
+        if not self.countries_data:
+            return
+        
+        # Сохраняем выделенные элементы
+        selected_indices = set(self.country_listbox.curselection()) if hasattr(self, 'country_listbox') else set()
+        selected_countries = set()
+        if selected_indices:
+            for idx in selected_indices:
+                if idx < len(self.filtered_countries):
+                    selected_countries.add(self.filtered_countries[idx][0])  # сохраняем названия
+        
+        # Сортируем filtered_countries на основе текущего поиска и настройки сортировки
+        query = self.search_entry.get().strip().lower() if hasattr(self, 'search_entry') else ""
+        
+        if query:
+            self.filtered_countries = [(n, c) for n, c in self.countries_data if query in n.lower()]
+        else:
+            self.filtered_countries = self.countries_data.copy()
+        
+        # Применяем сортировку по алфавиту, если включена
+        if self.sort_alphabetically_var.get():
+            self.filtered_countries.sort(key=lambda x: x[0].lower())
+        
+        # Восстанавливаем выделение
+        if hasattr(self, 'country_listbox') and selected_countries:
+            self.root.after(100, lambda: self.restore_selection(selected_countries))
+
+    def restore_selection(self, selected_countries):
+        """Восстанавливает выделение стран после сортировки"""
+        for i, (name, _) in enumerate(self.filtered_countries):
+            if name in selected_countries:
+                self.country_listbox.selection_set(i)
+        # Прокручиваем к первому выделенному элементу
+        if selected_countries:
+            self.country_listbox.see(self.country_listbox.curselection()[0])
+
+    def toggle_sorting(self):
+        """Обработчик изменения состояния чек-бокса сортировки"""
+        self.apply_sorting()
+        self.update_country_list()
 
     def create_widgets(self):
         # Основной контейнер с разделением
@@ -389,7 +433,17 @@ class CIDRMergerApp:
         search_buttons = ttk.Frame(search_frame)
         search_buttons.pack(fill='x', padx=5, pady=2)
         ttk.Button(search_buttons, text="Сброс", command=self.clear_search).pack(side='left', padx=2)
-        ttk.Label(search_buttons, text=f"Всего: {len(self.countries_data)}", font=('Arial', 8)).pack(side='right', padx=2)
+        self.total_countries_label = ttk.Label(search_buttons, text="", font=('Arial', 8))
+        self.total_countries_label.pack(side='right', padx=2)
+        
+        # НОВЫЙ ЧЕК-БОКС ДЛЯ СОРТИРОВКИ
+        sort_frame = ttk.Frame(left_panel)
+        sort_frame.pack(fill='x', pady=(0, 5), padx=5)
+        self.sort_alphabetically_var = tk.BooleanVar(value=self.settings.get('sort_alphabetically', False))
+        sort_checkbox = ttk.Checkbutton(sort_frame, text="🔤 Сортировать по алфавиту", 
+                                        variable=self.sort_alphabetically_var,
+                                        command=self.toggle_sorting)
+        sort_checkbox.pack(side='left')
         
         list_frame = ttk.LabelFrame(left_panel, text="📋 Выберите страны", padding=5)
         list_frame.pack(fill='both', expand=True)
@@ -494,8 +548,13 @@ class CIDRMergerApp:
     def on_lang_change(self):
         self.current_lang = self.lang_var.get()
         self.save_settings()
+        # При смене языка перезагружаем список стран
+        self.countries_data = []
+        self.filtered_countries = []
+        self.update_country_list()
         self.status_label.config(text=f"🌐 Язык: {'Русский' if self.current_lang == 'ru' else 'English'}", 
                                  foreground="blue")
+        threading.Thread(target=self.load_countries_async, daemon=True).start()
         self.root.after(2000, lambda: self.status_label.config(text="✅ Готов", foreground="green"))
 
     def clear_search(self):
@@ -504,17 +563,19 @@ class CIDRMergerApp:
 
     def update_country_list(self):
         self.country_listbox.delete(0, tk.END)
+        if not self.filtered_countries:
+            self.country_listbox.insert(tk.END, "⏳ Загрузка списка стран...")
+            self.total_countries_label.config(text="")
+            return
         for name, country_id in self.filtered_countries:
             self.country_listbox.insert(tk.END, f"{name}")
-        self.status_label.config(text=f"✅ Загружено {len(self.filtered_countries)} стран", 
-                                 foreground="green")
+        self.total_countries_label.config(text=f"Всего: {len(self.filtered_countries)}")
+        self.status_label.config(text=f"✅ Загружено {len(self.filtered_countries)} стран", foreground="green")
 
     def on_search(self, event):
-        query = self.search_entry.get().strip().lower()
-        if not query:
-            self.filtered_countries = self.countries_data
-        else:
-            self.filtered_countries = [(n, c) for n, c in self.countries_data if query in n.lower()]
+        if not self.countries_data:
+            return
+        self.apply_sorting()  # применяем сортировку с учётом поиска
         self.update_country_list()
 
     def select_all_countries(self):
@@ -613,7 +674,7 @@ class CIDRMergerApp:
 
     def load_selected_ranges(self):
         sel = self.country_listbox.curselection()
-        if not sel:
+        if not sel or not self.filtered_countries:
             messagebox.showinfo("Информация", "Пожалуйста, выберите хотя бы одну страну")
             return
         
